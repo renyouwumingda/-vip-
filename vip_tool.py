@@ -1026,7 +1026,7 @@ class VideoDownloader:
             "Origin": referer,
         }
         try:
-            resp = requests.get(m3u8_url, headers=headers, timeout=30, verify=False)
+            resp = requests.get(m3u8_url, headers=headers, timeout=60, verify=False)
             resp.encoding = "utf-8"
             content = resp.text
         except Exception as e:
@@ -1057,7 +1057,7 @@ class VideoDownloader:
         
         while time.time() - start_time < max_wait:
             try:
-                resp = requests.get(m3u8_url, headers=headers, timeout=10, verify=False)
+                resp = requests.get(m3u8_url, headers=headers, timeout=60, verify=False)
                 if resp.status_code != 200:
                     break
                 content = resp.text
@@ -1361,7 +1361,7 @@ class VideoDownloader:
         except Exception:
             return False
 
-    def download_ts(self, ts_info, filename, retries=3):
+    def download_ts(self, ts_info, filename, retries=10):
         import random
         
         ts_url, key_info = ts_info if isinstance(ts_info, tuple) else (ts_info, None)
